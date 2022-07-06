@@ -1,5 +1,11 @@
 package com.bluecrm.utilities;
 
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class BrowserUtils {
 
     /*
@@ -13,6 +19,30 @@ public class BrowserUtils {
         } catch (InterruptedException e) {
 
         }
+
+    }
+
+    /**
+     * This method will accept a dropdown as a WebElement
+     * and return all the options' text in a List of String.
+     * @param dropdownElement
+     * @return List<String> actualOptionsAsString
+     */
+
+    public static List<String> dropdownOptionsAsString(WebElement dropdownElement){
+
+        Select select = new Select(dropdownElement);
+        //create a list of string and pass all of the actual web element options string into that new list
+        List<WebElement> actualOptionsAsWebElement = select.getOptions();
+
+        //List of all ACTUAL month <options> as a String
+        List<String> actualOptionsAsString = new ArrayList<>();
+
+        for (WebElement each : actualOptionsAsWebElement) {
+            actualOptionsAsString.add(each.getText());
+        }
+
+        return actualOptionsAsString;
 
     }
 
