@@ -1,7 +1,7 @@
  @login
 Feature: app login feature
   User Story:
-  As a user, I should be able to add link, insert video, mention, quote, add tag in message.
+  As a user,I should be able to add link, insert video, mention, quote, add tag in message.
 
   Account is mail:helpdesk1@cybertekschool.com
   password:UserUser
