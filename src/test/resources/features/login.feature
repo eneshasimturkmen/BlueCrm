@@ -44,7 +44,6 @@ Feature: app login feature
     And User should be add Vimeo link "https://vimeo.com/499694935"
     Then User after add a video link,should be click save button,The video should be see in message
 
-
   @wip
   Scenario:   As a user, User shouldn't be able to insert other videos.(Negative Scenerio)
     Given User should login with correct credential
