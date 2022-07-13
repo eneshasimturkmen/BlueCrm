@@ -12,6 +12,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -44,20 +45,21 @@ public class login_stepdefinitons {
         BrowserUtils.sleep(1);
         messagePage.loginbutton.click();
 
+/*
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 10);
+        wait.until(ExpectedConditions.titleContains("portal"));
+ */
+
+         Assert.assertTrue(Driver.getDriver().getTitle().contains("Portal"));
 
 
-            BrowserUtils.sleep(3);
+        Assert.assertTrue(messagePage.sendmessagetext.isDisplayed());
 
-            Assert.assertTrue(Driver.getDriver().getTitle().contains("Portal"));
+        BrowserUtils.sleep(2);
 
+        actions.click(messagePage.sendmessagetext).perform();
 
-            Assert.assertTrue(messagePage.sendmessagetext.isDisplayed());
-
-            BrowserUtils.sleep(2);
-
-            actions.click(messagePage.sendmessagetext).perform();
-
-            BrowserUtils.sleep(2);
+        BrowserUtils.sleep(2);
 
         }
 
@@ -87,15 +89,25 @@ public class login_stepdefinitons {
         BrowserUtils.sleep(2);
         messagePage.departmentEmployees.click();
         BrowserUtils.sleep(2);
-        messagePage.sendButton.click();
+
+
+
+
+
+
+    }
+
+    @Then("Verification The chosen departments employess should be see in")
+    public void verificationTheChosenDepartmentsEmployessShouldBeSeeIn() {
+
 
         BrowserUtils.sleep(3);
+        Assert.assertTrue(messagePage.selectedEmployess.isDisplayed());
+
 
         Driver.closeDriver();
 
     }
-
-
 
 
 
@@ -130,7 +142,7 @@ public class login_stepdefinitons {
         messagePage.saveButton.click();
     }
 
-    @Then("Users should click send button and user should be see in message")
+    @Then("Verification Users should click send button and user should be see in message")
     public void Usersshouldclicksendbuttonandusershouldbseeinmessage() {
 
         BrowserUtils.sleep(2);
@@ -139,7 +151,7 @@ public class login_stepdefinitons {
 
         BrowserUtils.sleep(5);
 
-
+        Assert.assertTrue(messagePage.linkInMessage.isDisplayed());
 
 
         Driver.closeDriver();
@@ -168,6 +180,9 @@ public class login_stepdefinitons {
         messagePage.saveButtonforVideo.click();
 
         BrowserUtils.sleep(3);
+
+        Assert.assertTrue(messagePage.videoErrorMessage.isDisplayed());
+
 
         Driver.closeDriver();
 
@@ -199,14 +214,11 @@ public class login_stepdefinitons {
     public void userAfterAddAVideoLinkShouldBeClickSaveButton() {
 
 
-        BrowserUtils.sleep(2);
-        messagePage.saveButtonforVideo.click();
+        BrowserUtils.sleep(10);
 
-
-        BrowserUtils.sleep(3);
-
-        messagePage.sendButton.click();
-
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(),10);
+        wait.until(ExpectedConditions.elementToBeClickable(messagePage.videoErrorMessage));
+        Assert.assertTrue(messagePage.videoErrorMessage.isDisplayed());
 
         BrowserUtils.sleep(3);
 
@@ -249,7 +261,7 @@ public class login_stepdefinitons {
 
 
         BrowserUtils.sleep(2);
-        messagePage.videoTextButton.sendKeys(arg0);
+        messagePage.videoTextButton.sendKeys(arg0+faker.numerify("##"));
 
         BrowserUtils.sleep(15);
 
@@ -267,7 +279,20 @@ public class login_stepdefinitons {
 
     }
 
-    @Then("User should be see yellow box after the click")
+    @And("User should be see Quote box after the click")
+    public void userShouldBeSeeQuoteBoxAfterTheClick() {
+
+        Driver.getDriver().switchTo().frame(Driver.getDriver().findElement(By.xpath("//iframe[@class='bx-editor-iframe']")));
+
+        Assert.assertTrue(messagePage.quoteInTextBox.isDisplayed());
+
+        BrowserUtils.sleep(3);
+
+        Driver.getDriver().switchTo().parentFrame();
+    }
+
+
+    @Then("Verification User should be see Quote box after the click")
     public void userShouldBeSeeYellowBoxAfterTheClick() {
 
         Driver.getDriver().switchTo().frame(Driver.getDriver().findElement(By.xpath("//iframe[@class='bx-editor-iframe']")));
@@ -278,6 +303,7 @@ public class login_stepdefinitons {
 
         Driver.getDriver().switchTo().parentFrame();
 
+
     }
 
     @Then("User should be able add link in Quote box and than click send button")
@@ -285,11 +311,7 @@ public class login_stepdefinitons {
 
         Driver.getDriver().switchTo().frame(Driver.getDriver().findElement(By.xpath("//iframe[@class='bx-editor-iframe']")));
 
-        messagePage.quoteInTextBox.sendKeys(faker.harryPotter().book()+("##"));
-
-
-
-        //messagePage.quoteInTextBox.sendKeys("https://github.com/devdeals/devdeals.org/blob/main/README.md?gclid=EAIaIQobChMI1raE-_fV-AIVmLp3Ch0qCgM7EAAYAyAAEgIxk_D_BwE");
+        messagePage.quoteInTextBox.sendKeys("https://github.com/devdeals/devdeals.org/blob/main/README.md?gclid=EAIaIQobChMI1raE-_fV-AIVmLp3Ch0qCgM7EAAYAyAAEgIxk_D_BwE"+faker.numerify("##"));
 
         Driver.getDriver().switchTo().parentFrame();
 
@@ -300,24 +322,25 @@ public class login_stepdefinitons {
         BrowserUtils.sleep(3);
 
 
+
+
+
+
+    }
+
+
+
+    @Then("Verification User should be see link in message")
+    public void verificationUserShouldBeSeeLinkInMessage() {
+
+
+        BrowserUtils.sleep(3);
+
+        Assert.assertTrue(messagePage.linkInMessage.isDisplayed());
+
         Driver.closeDriver();
-
-
-
-    }
-/*
-    @And("User should be add more than one quotes")
-    public void userShouldBeAddMoreThanOneQuotes() {
-
-
-        BrowserUtils.sleep(2);
-
-        messagePage.quoteButton.click();
-
-
     }
 
- */
 
     @And("The user should delete the quote one quote")
     public void theUserShouldDeleteTheQuoteOneQuote() {
@@ -338,14 +361,6 @@ public class login_stepdefinitons {
 
 
         BrowserUtils.sleep(2);
-
-
-
-
-
-
-
-
 
 
 
@@ -391,21 +406,30 @@ public class login_stepdefinitons {
 
     }
 
-    @Then("User after send message,should be see tag in message {string}")
+    @Then("Verification User after send message,should be see tag in message {string}")
     public void userAfterSendMessageShouldBeSeeTagInMessage(String tag) {
         BrowserUtils.sleep(2);
         Assert.assertEquals(tag,messagePage.selectedTagınMessage.getText());
 
         Driver.getDriver().switchTo().frame(Driver.getDriver().findElement(By.xpath("//iframe[@class='bx-editor-iframe']")));
 
-        messagePage.textBox.sendKeys("Hello BlueCrm");
+        messagePage.textBox.sendKeys("tagVerification");
 
         Driver.getDriver().switchTo().parentFrame();
-
 
         BrowserUtils.sleep(2);
 
         messagePage.sendButton.click();
+
+
+        BrowserUtils.sleep(3);
+
+        Assert.assertTrue(messagePage.tagforfirstmassege.getText().contains("soccer"));
+
+
+
+
+
 
 
 
@@ -422,17 +446,17 @@ public class login_stepdefinitons {
 
     }
 
-    @Then("The tag name must be deleted")
+    @Then("Verification The tag name must be deleted")
     public void theTagNameMustBeDeleted() {
         BrowserUtils.sleep(2);
 
-
-
-
+        Assert.assertFalse(messagePage.tagsBox.getText().contains("soccer"));
 
 
 
       }
 
-    }
+
+
+}
 

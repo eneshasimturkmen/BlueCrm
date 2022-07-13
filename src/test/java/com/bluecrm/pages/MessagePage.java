@@ -90,11 +90,17 @@ public class MessagePage extends BasePage{
     @FindBy(xpath = "(//span[@class='feed-add-post-del-but'])[2]")
     public WebElement deletesymbol;
 
-    @FindBy(id = "post-tags-hidden-blogPostForm")
+    @FindBy(id = "post-tags-container-blogPostForm")
     public WebElement tagsBox;
 
-    @FindBy(xpath = "(//div[starts-with(@id, 'blogpost-tags')])[1]")
+    @FindBy(xpath = "(//a[@class='feed-com-tag'])[1]")
     public WebElement tagforfirstmassege;
+
+    @FindBy(xpath = "(//a[@target='_blank'])[12]")
+    public WebElement linkInMessage;
+
+    @FindBy(xpath = "(//span[@class='feed-add-post-destination-text'])[2]")
+    public WebElement selectedEmployess;
 
 
 
