@@ -5,23 +5,18 @@ import com.bluecrm.utilities.BrowserUtils;
 import com.bluecrm.utilities.ConfigurationReader;
 import com.bluecrm.utilities.Driver;
 import com.github.javafaker.Faker;
-import io.cucumber.java.bs.A;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.security.Key;
-
-public class login_stepdefinitons {
+public class messageButtons {
     MessagePage messagePage = new MessagePage();
     Actions actions = new Actions(Driver.getDriver());
     Faker faker = new Faker();
@@ -31,8 +26,8 @@ public class login_stepdefinitons {
     @Given("User should login with correct credential")
     public void userShouldLoginWithCorrectCredential() {
 
-            Driver.getDriver().get(ConfigurationReader.getProperty("url"));
-        messagePage.usernamebox.clear();
+        Driver.getDriver().get(ConfigurationReader.getProperty("url"));
+
         BrowserUtils.sleep(1);
 
         messagePage.usernamebox.sendKeys(ConfigurationReader.getProperty("username"));
@@ -238,10 +233,6 @@ public class login_stepdefinitons {
 
 
 
-
-
-
-
     }
 
 
@@ -272,6 +263,15 @@ public class login_stepdefinitons {
     @And("User should be click Quote text button")
     public void userShouldBeClickQuoteTextButton() {
 
+        Driver.getDriver().switchTo().frame(Driver.getDriver().findElement(By.xpath("//iframe[@class='bx-editor-iframe']")));
+
+        BrowserUtils.sleep(2);
+
+        messagePage.textBox.clear();
+
+        Driver.getDriver().switchTo().parentFrame();
+
+
         messagePage.quoteButton.click();
 
         BrowserUtils.sleep(2);
@@ -297,11 +297,15 @@ public class login_stepdefinitons {
 
         Driver.getDriver().switchTo().frame(Driver.getDriver().findElement(By.xpath("//iframe[@class='bx-editor-iframe']")));
 
+        BrowserUtils.sleep(2);
+
         Assert.assertTrue(messagePage.quoteInTextBox.isDisplayed());
 
         BrowserUtils.sleep(3);
 
         Driver.getDriver().switchTo().parentFrame();
+
+        Driver.closeDriver();
 
 
     }
@@ -408,8 +412,7 @@ public class login_stepdefinitons {
 
     @Then("Verification User after send message,should be see tag in message {string}")
     public void userAfterSendMessageShouldBeSeeTagInMessage(String tag) {
-        BrowserUtils.sleep(2);
-        Assert.assertEquals(tag,messagePage.selectedTagınMessage.getText());
+
 
         Driver.getDriver().switchTo().frame(Driver.getDriver().findElement(By.xpath("//iframe[@class='bx-editor-iframe']")));
 
@@ -428,7 +431,7 @@ public class login_stepdefinitons {
 
 
 
-
+        Driver.closeDriver();
 
 
 
@@ -452,7 +455,7 @@ public class login_stepdefinitons {
 
         Assert.assertFalse(messagePage.tagsBox.getText().contains("soccer"));
 
-
+        Driver.closeDriver();
 
       }
 
