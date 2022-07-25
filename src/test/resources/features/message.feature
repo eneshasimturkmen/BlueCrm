@@ -1,5 +1,5 @@
  @login
-Feature: app login feature
+Feature: send message
   User Story:
   As a user,I should be able to add link, insert video, mention, quote, add tag in message.
 
