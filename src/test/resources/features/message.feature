@@ -23,6 +23,7 @@ Feature: app login feature
     Then Verification Users should click send button and user should be see in message
 
 
+
   @fail
   Scenario: The link format of the link written by the user must be correct
     Given User should login with correct credential
