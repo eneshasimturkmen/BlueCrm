@@ -1,5 +1,5 @@
  @login
-Feature: send message
+Feature: add features in message
   User Story:
   As a user,I should be able to add link, insert video, mention, quote, add tag in message.
 
